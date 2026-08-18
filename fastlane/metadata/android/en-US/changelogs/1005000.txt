@@ -1,0 +1,7 @@
+A completely new app, rebuilt from scratch for Android.
+
+• Refreshed design following Material Design guidelines.
+• A faster map, with transport positions updating more often.
+• Stop arrivals now show both directions of travel.
+• Language and theme can be changed inside the app.
+• Tablet support: the route list sits beside the map.

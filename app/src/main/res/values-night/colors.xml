@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark launch screen inverts the sign: brand-blue bus on black. -->
+    <color name="splash_background">#000000</color>
+    <color name="splash_bus">#3E7FE8</color>
+</resources>

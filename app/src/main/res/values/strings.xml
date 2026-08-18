@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Ukrainian is the development language and therefore lives in the default `values/`, so a
+  device set to any third language lands here instead of on English. English is in `values-en/`.
+  Keys are symbolic (`routes_title`, not a Ukrainian sentence) so a missing translation is a
+  loud failure rather than a silently-correct-looking one.
+-->
+<resources>
+    <string name="app_name">Транспорт</string>
+
+    <string name="common_cancel">Скасувати</string>
+    <string name="common_retry">Повторити</string>
+
+    <string name="error_load_title">Не вдалося завантажити дані</string>
+    <string name="error_load_message">Перевірте з\'єднання з інтернетом і спробуйте ще раз.</string>
+
+    <string name="eta_now">зараз</string>
+    <string name="eta_seconds">%1$d с</string>
+    <string name="eta_minutes">%1$d хв</string>
+
+    <string name="location_denied_title">Немає доступу до геолокації</string>
+    <string name="location_denied_message">Дозвольте доступ до геолокації в налаштуваннях, щоб побачити своє місце на карті.</string>
+    <string name="location_denied_settings">Відкрити налаштування</string>
+
+    <string name="map_control_locate">Моє місце</string>
+    <string name="map_control_settings">Налаштування</string>
+    <string name="map_control_zoom_in">Збільшити</string>
+    <string name="map_control_zoom_out">Зменшити</string>
+    <string name="map_loading_routes">Завантаження маршрутів…</string>
+    <string name="map_no_routes_selected">Оберіть маршрути</string>
+    <string name="map_routes_button">Маршрути</string>
+    <string name="map_status_online">Онлайн</string>
+    <string name="map_status_disconnected">Офлайн</string>
+
+    <string name="routes_title">Маршрути</string>
+    <string name="routes_search_prompt">Номер або назва</string>
+    <string name="routes_filter_all">Усі</string>
+    <string name="routes_filter_bus">Автобуси</string>
+    <string name="routes_filter_trolley">Тролейбуси</string>
+    <string name="routes_section_selected">Обрані</string>
+    <string name="routes_section_bus">Автобуси</string>
+    <string name="routes_section_trolley">Тролейбуси</string>
+    <string name="routes_select_all">Обрати всі</string>
+    <string name="routes_clear">Очистити</string>
+    <string name="routes_show_offline">Показувати офлайн</string>
+    <string name="routes_not_running">не курсує</string>
+    <plurals name="routes_on_route">
+        <item quantity="one">%1$d в русі</item>
+        <item quantity="few">%1$d в русі</item>
+        <item quantity="many">%1$d в русі</item>
+        <item quantity="other">%1$d в русі</item>
+    </plurals>
+    <string name="routes_empty_title">Нічого не знайдено</string>
+    <string name="routes_empty_message">Спробуйте інший номер або назву маршруту.</string>
+    <plurals name="routes_selected_count">
+        <item quantity="one">%1$d маршрут</item>
+        <item quantity="few">%1$d маршрути</item>
+        <item quantity="many">%1$d маршрутів</item>
+        <item quantity="other">%1$d маршруту</item>
+    </plurals>
+
+    <string name="station_direction_forward">Прямий напрямок</string>
+    <string name="station_direction_reverse">Зворотний напрямок</string>
+    <string name="station_filter_selected">Обрані</string>
+    <string name="station_filter_all">Усі</string>
+    <string name="station_empty_title">Немає прогнозів</string>
+    <string name="station_empty_message">Найближчим часом транспорт сюди не очікується.</string>
+    <string name="station_error_title">Помилка завантаження</string>
+    <plurals name="station_routes_count">
+        <item quantity="one">%1$d маршрут</item>
+        <item quantity="few">%1$d маршрути</item>
+        <item quantity="many">%1$d маршрутів</item>
+        <item quantity="other">%1$d маршруту</item>
+    </plurals>
+
+    <string name="settings_title">Налаштування</string>
+    <string name="settings_appearance_section">Вигляд</string>
+    <string name="settings_appearance_system">Системний</string>
+    <string name="settings_appearance_light">Світлий</string>
+    <string name="settings_appearance_dark">Темний</string>
+    <string name="settings_language_section">Мова</string>
+    <string name="settings_language_system">Системна</string>
+    <string name="settings_language_uk">Українська</string>
+    <string name="settings_language_en">English</string>
+
+    <string name="unit_meters">%1$d м</string>
+    <string name="unit_km">%1$s км</string>
+    <string name="unit_speed">%1$d км/год</string>
+
+    <string name="vehicle_title">Транспорт</string>
+    <string name="vehicle_speed">Швидкість</string>
+    <string name="vehicle_heading">Напрямок</string>
+    <string name="vehicle_last_seen">Востаннє</string>
+    <string name="vehicle_offline">Офлайн</string>
+    <string name="vehicle_show_route">Показати маршрут</string>
+
+    <!-- Compass points, in the order N, NE, E … used for a vehicle's heading. -->
+    <string-array name="compass_points">
+        <item>Пн</item>
+        <item>ПнСх</item>
+        <item>Сх</item>
+        <item>ПдСх</item>
+        <item>Пд</item>
+        <item>ПдЗх</item>
+        <item>Зх</item>
+        <item>ПнЗх</item>
+    </string-array>
+</resources>

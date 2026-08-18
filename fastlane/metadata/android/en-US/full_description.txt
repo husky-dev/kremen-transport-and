@@ -1,0 +1,12 @@
+An app for tracking buses, trolleybuses, and minibuses in Kremenchuk. Check when transport arrives at your stops and follow only the routes you need.
+
+FEATURES
+
+• Live information — all of the city's public transport on the map, updated every few seconds.
+• Arrival times — tap a stop marker to see when transport is due to arrive.
+• Only your routes — show just the information you need, without the noise.
+• Vehicle details — route number, speed and heading, plus the time of the last update.
+• Quick start — routes and stops are stored on your device, so the map appears at once, before fresh data has loaded.
+• Light and dark themes, Ukrainian and English, phone and tablet support.
+
+No sign-up and no ads. Location access is optional — it is only used to show where you are on the map.

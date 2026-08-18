@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Ukrainian first: it is the development language, so any unlisted device language
+     falls back to it via res/values/ rather than to English. -->
+<locale-config xmlns:android="http://schemas.android.com/apk/res/android">
+    <locale android:name="uk" />
+    <locale android:name="en" />
+</locale-config>

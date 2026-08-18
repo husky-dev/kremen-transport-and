@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Brand blue, shared with the iOS app and the bus-stop-sign launch screen. -->
+    <color name="splash_background">#3E7FE8</color>
+    <color name="splash_bus">#FFFFFF</color>
+</resources>

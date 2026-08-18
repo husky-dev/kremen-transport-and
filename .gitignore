@@ -1,0 +1,22 @@
+*.iml
+.gradle/
+.idea/
+.DS_Store
+build/
+local.properties
+captures/
+.externalNativeBuild/
+.cxx/
+*.jks
+*.keystore
+!app/debug.keystore
+
+fastlane/private/
+fastlane/report.xml
+fastlane/Preview.html
+
+# Signing (see keystore.properties.example)
+keystore.properties
+
+# Emulator captures
+shot.png

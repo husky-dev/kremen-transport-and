@@ -1,0 +1,86 @@
+default_platform(:android)
+opt_out_usage
+
+# Google Play service account, kept out of the repo. Create one under
+# Play Console -> Users and permissions (or Google Cloud -> IAM -> Service accounts) with the
+# "Release manager" role, download its JSON key and drop it at:
+#
+#   fastlane/private/play_key.json
+#
+# `fastlane/private/` is git-ignored. Verify the credentials with `fastlane run validate_play_store_json_key`.
+#
+# fastlane comes from Homebrew (`brew install fastlane`), so there is no Gemfile or bundler here,
+# matching the iOS repo.
+PLAY_KEY_PATH = File.expand_path("private/play_key.json", __dir__)
+
+def play_key_path!
+  UI.user_error!("Missing #{PLAY_KEY_PATH} — see the comment at the top of the Fastfile") unless File.exist?(PLAY_KEY_PATH)
+  PLAY_KEY_PATH
+end
+
+# The AAB Play actually receives. `bundleRelease` reads keystore.properties for signing; without
+# it Gradle falls back to the debug key, which Play will reject — deliberately, rather than
+# uploading something unsigned by accident.
+AAB_PATH = "app/build/outputs/bundle/release/app-release.aab"
+
+platform :android do
+  desc "Download the live Play listing into fastlane/metadata/android"
+  lane :metadata_pull do
+    # supply only exposes downloading through `init` on its CLI, not through an action.
+    # Overwriting is safe — this is git, so the result reads as a diff.
+    Dir.chdir("..") do
+      sh("fastlane", "supply", "init", "--json_key", play_key_path!)
+    end
+  end
+
+  desc "Upload fastlane/metadata/android back to Play (no binary, no images)"
+  lane :metadata_push do
+    supply(
+      json_key: play_key_path!,
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+
+  desc "Upload the listing images and screenshots in fastlane/metadata/android"
+  lane :images_push do
+    supply(
+      json_key: play_key_path!,
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_changelogs: true
+    )
+  end
+
+  desc "Build a release AAB and upload it to the internal track"
+  lane :internal do
+    gradle(task: "bundle", build_type: "Release")
+    supply(
+      json_key: play_key_path!,
+      track: "internal",
+      aab: AAB_PATH,
+      skip_upload_images: true,
+      skip_upload_screenshots: true,
+      release_status: "completed"
+    )
+  end
+
+  desc "Promote the internal build to production. Rolls out to a fraction first."
+  lane :production do |options|
+    supply(
+      json_key: play_key_path!,
+      track: "internal",
+      track_promote_to: "production",
+      # A transport app people rely on daily: ramp rather than flip.
+      rollout: options[:rollout] || "0.2",
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_metadata: true,
+      skip_upload_images: true,
+      skip_upload_screenshots: true
+    )
+  end
+end

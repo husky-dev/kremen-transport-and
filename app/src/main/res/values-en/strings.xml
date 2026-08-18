@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Transport</string>
+
+    <string name="common_cancel">Cancel</string>
+    <string name="common_retry">Retry</string>
+
+    <string name="error_load_title">Couldn\'t load data</string>
+    <string name="error_load_message">Check your internet connection and try again.</string>
+
+    <string name="eta_now">now</string>
+    <string name="eta_seconds">%1$d s</string>
+    <string name="eta_minutes">%1$d min</string>
+
+    <string name="location_denied_title">Location access denied</string>
+    <string name="location_denied_message">Allow location access in settings to see your position on the map.</string>
+    <string name="location_denied_settings">Open settings</string>
+
+    <string name="map_control_locate">My location</string>
+    <string name="map_control_settings">Settings</string>
+    <string name="map_control_zoom_in">Zoom in</string>
+    <string name="map_control_zoom_out">Zoom out</string>
+    <string name="map_loading_routes">Loading routes…</string>
+    <string name="map_no_routes_selected">Choose routes</string>
+    <string name="map_routes_button">Routes</string>
+    <string name="map_status_online">Online</string>
+    <string name="map_status_disconnected">Offline</string>
+
+    <string name="routes_title">Routes</string>
+    <string name="routes_search_prompt">Number or name</string>
+    <string name="routes_filter_all">All</string>
+    <string name="routes_filter_bus">Buses</string>
+    <string name="routes_filter_trolley">Trolleybuses</string>
+    <string name="routes_section_selected">Selected</string>
+    <string name="routes_section_bus">Buses</string>
+    <string name="routes_section_trolley">Trolleybuses</string>
+    <string name="routes_select_all">Select all</string>
+    <string name="routes_clear">Clear</string>
+    <string name="routes_show_offline">Show offline</string>
+    <string name="routes_not_running">not running</string>
+    <plurals name="routes_on_route">
+        <item quantity="one">%1$d running</item>
+        <item quantity="other">%1$d running</item>
+    </plurals>
+    <string name="routes_empty_title">No results</string>
+    <string name="routes_empty_message">Try another route number or name.</string>
+    <plurals name="routes_selected_count">
+        <item quantity="one">%1$d route</item>
+        <item quantity="other">%1$d routes</item>
+    </plurals>
+
+    <string name="station_direction_forward">Outbound</string>
+    <string name="station_direction_reverse">Inbound</string>
+    <string name="station_filter_selected">Selected</string>
+    <string name="station_filter_all">All</string>
+    <string name="station_empty_title">No arrivals</string>
+    <string name="station_empty_message">No transport is expected here soon.</string>
+    <string name="station_error_title">Failed to load</string>
+    <plurals name="station_routes_count">
+        <item quantity="one">%1$d route</item>
+        <item quantity="other">%1$d routes</item>
+    </plurals>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_appearance_section">Appearance</string>
+    <string name="settings_appearance_system">System</string>
+    <string name="settings_appearance_light">Light</string>
+    <string name="settings_appearance_dark">Dark</string>
+    <string name="settings_language_section">Language</string>
+    <string name="settings_language_system">System</string>
+    <string name="settings_language_uk">Українська</string>
+    <string name="settings_language_en">English</string>
+
+    <string name="unit_meters">%1$d m</string>
+    <string name="unit_km">%1$s km</string>
+    <string name="unit_speed">%1$d km/h</string>
+
+    <string name="vehicle_title">Vehicle</string>
+    <string name="vehicle_speed">Speed</string>
+    <string name="vehicle_heading">Heading</string>
+    <string name="vehicle_last_seen">Last seen</string>
+    <string name="vehicle_offline">Offline</string>
+    <string name="vehicle_show_route">Show route</string>
+
+    <!-- Compass points, in the order N, NE, E … used for a vehicle's heading. -->
+    <string-array name="compass_points">
+        <item>N</item>
+        <item>NE</item>
+        <item>E</item>
+        <item>SE</item>
+        <item>S</item>
+        <item>SW</item>
+        <item>W</item>
+        <item>NW</item>
+    </string-array>
+</resources>

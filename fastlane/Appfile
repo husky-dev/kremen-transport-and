@@ -1,0 +1,2 @@
+json_key_file("fastlane/private/play_key.json")
+package_name("com.krementransport")

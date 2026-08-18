@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--
+      Compose owns every colour once the app is running, so the resource theme only has to
+      carry the splash. `Theme.KremenTransport` is deliberately bare.
+    -->
+    <style name="Theme.KremenTransport" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/splash_background</item>
+    </style>
+
+    <style name="Theme.KremenTransport.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_bus</item>
+        <item name="postSplashScreenTheme">@style/Theme.KremenTransport</item>
+    </style>
+</resources>
