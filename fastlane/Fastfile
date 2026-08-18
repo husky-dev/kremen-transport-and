@@ -56,9 +56,32 @@ platform :android do
   end
 
   desc "Upload the listing images and screenshots in fastlane/metadata/android"
-  lane :images_push do
+  # This replaces the listing's screenshots outright: supply clears every remote screenshot of
+  # each type/locale before uploading (`clear_screenshots`), so what Play ends up with is exactly
+  # the twelve generated files in metadata/android. There is no undo and Play keeps no copy — the
+  # repo is the backup. Do not add `sync_image_upload: true` to "speed this up": it is the
+  # opposite mode, keeping remote images whose checksums still match, which silently leaves stale
+  # shots in place when only some were regenerated.
+  #
+  # Images are listing-level, but supply insists on resolving a *release* before it uploads any
+  # metadata at all — it looks one up even with changelogs skipped, and dies with "Could not find
+  # release for version code '' to update changelog" otherwise. Its default track is `production`,
+  # which is empty here, so the track has to be named and a version code found on it; the highest
+  # live code is read back from Play rather than hardcoded, so this keeps working after the next
+  # upload. Override with `fastlane images_push track:production`.
+  lane :images_push do |options|
+    track = options[:track] || "internal"
+    version_code = (options[:version_code] || google_play_track_version_codes(
+      track: track,
+      json_key: play_key_path!,
+      package_name: "com.krementransport"
+    ).max).to_i
+    UI.user_error!("No release on the '#{track}' track to hang the listing images off") if version_code.zero?
+
     supply(
       json_key: play_key_path!,
+      track: track,
+      version_code: version_code,
       skip_upload_apk: true,
       skip_upload_aab: true,
       skip_upload_metadata: true,
