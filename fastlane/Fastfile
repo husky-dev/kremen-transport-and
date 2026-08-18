@@ -73,6 +73,9 @@ platform :android do
       json_key: play_key_path!,
       track: "internal",
       aab: AAB_PATH,
+      # A leftover app-release.apk from `make release` makes supply refuse the edit outright
+      # ("Cannot provide both apk(s) and aab"), even though the AAB is named explicitly above.
+      skip_upload_apk: true,
       skip_upload_images: true,
       skip_upload_screenshots: true,
       release_status: "completed"
