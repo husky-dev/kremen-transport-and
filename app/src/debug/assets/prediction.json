@@ -1,0 +1,9 @@
+[
+  { "rid": 16, "sid": 306, "tid": "359632102058879", "avgSpeed": 16, "distance": 200, "generatedTime": 1786967047000, "mainPrediction": true, "messageTime": 1786967047000, "prediction": 45, "reverse": true, "speed": 11 },
+  { "rid": 7, "sid": 306, "tid": "358480083752024", "avgSpeed": 22, "distance": 730, "generatedTime": 1786967047000, "mainPrediction": true, "messageTime": 1786967047000, "prediction": 120, "reverse": false, "speed": 24 },
+  { "rid": 2, "sid": 306, "tid": "352094083078268", "avgSpeed": 24, "distance": 2010, "generatedTime": 1786967047000, "mainPrediction": true, "messageTime": 1786967047000, "prediction": 300, "reverse": false, "speed": 45 },
+  { "rid": 7, "sid": 306, "tid": "352094081611151", "avgSpeed": 19, "distance": 2215, "generatedTime": 1786967047000, "mainPrediction": true, "messageTime": 1786967047000, "prediction": 420, "reverse": true, "speed": -1 },
+  { "rid": 16, "sid": 306, "tid": "352094081612803", "avgSpeed": 21, "distance": 3150, "generatedTime": 1786967047000, "mainPrediction": true, "messageTime": 1786967047000, "prediction": 540, "reverse": false, "speed": 53 },
+  { "rid": 2, "sid": 306, "tid": "359632101583430", "avgSpeed": 23, "distance": 4980, "generatedTime": 1786967047000, "mainPrediction": true, "messageTime": 1786967047000, "prediction": 780, "reverse": true, "speed": -1 },
+  { "rid": 10, "sid": 306, "tid": "357454070044522", "avgSpeed": 18, "distance": 4500, "generatedTime": 1786967047000, "mainPrediction": true, "messageTime": 1786967047000, "prediction": 900, "reverse": true, "speed": 41 }
+]

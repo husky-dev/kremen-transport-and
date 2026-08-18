@@ -14,11 +14,13 @@ import com.krementransport.data.repo.VehicleRepository
  * Hand-rolled DI. A dependency-injection framework would earn its keep across feature modules;
  * this app is one screen and four singletons, so a container avoids the annotation processor
  * entirely.
+ *
+ * [api] is a parameter only so the debug-only screenshot harness can serve captured fixtures in
+ * place of the network. Production always takes the default.
  */
-class AppContainer(context: Context) {
+class AppContainer(context: Context, private val api: ApiClient = ApiClient()) {
     private val appContext = context.applicationContext
 
-    val api: ApiClient by lazy { ApiClient() }
     val transport: TransportRepository by lazy { TransportRepository(api, RouteCache(appContext)) }
     val vehicles: VehicleRepository by lazy { VehicleRepository(api) }
     val predictions: PredictionRepository by lazy { PredictionRepository(api) }

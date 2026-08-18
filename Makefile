@@ -4,6 +4,10 @@ export JAVA_HOME := /Applications/Android Studio.app/Contents/jbr/Contents/Home
 export ANDROID_HOME := $(HOME)/Library/Android/sdk
 export PATH := $(ANDROID_HOME)/platform-tools:$(ANDROID_HOME)/emulator:$(ANDROID_HOME)/cmdline-tools/latest/bin:$(PATH)
 
+# GNU make 3.81 execs a single-command recipe directly, using the PATH it inherited rather
+# than the one exported above — so `adb` has to be named in full.
+ADB      := $(ANDROID_HOME)/platform-tools/adb
+
 PKG      := com.krementransport
 DEBUG    := $(PKG).debug
 ACTIVITY := $(PKG)/$(PKG).MainActivity
@@ -12,7 +16,7 @@ SYSIMG   := system-images;android-36;google_apis;arm64-v8a
 APK      := app/build/outputs/apk/debug/app-debug.apk
 AAB      := app/build/outputs/bundle/release/app-release.aab
 
-.PHONY: build test lint release bundle install run stop logcat screenshot avd emulator clean metadata metadata-push images-push internal production
+.PHONY: build test lint release bundle install run stop logcat screenshot screenshots avd emulator clean metadata metadata-push images-push internal production
 
 build:
 	./gradlew :app:assembleDebug
@@ -32,19 +36,24 @@ bundle:
 	./gradlew :app:bundleRelease
 
 install: build
-	adb install -r $(APK)
+	$(ADB) install -r $(APK)
 
 run: install
-	adb shell am start -n $(DEBUG)/$(PKG).MainActivity
+	$(ADB) shell am start -n $(DEBUG)/$(PKG).MainActivity
 
 stop:
-	adb shell am force-stop $(DEBUG)
+	$(ADB) shell am force-stop $(DEBUG)
 
 logcat:
-	adb logcat -s AndroidRuntime:E TransportRepository:* VehicleRepository:* PredictionRepository:*
+	$(ADB) logcat -s AndroidRuntime:E TransportRepository:* VehicleRepository:* PredictionRepository:*
 
 screenshot:
-	adb exec-out screencap -p > shot.png
+	$(ADB) exec-out screencap -p > shot.png
+
+# The Play listing images. Needs a running emulator; drives the debug build's ScreenshotActivity,
+# which serves the captured API fixtures so the results are the same every run.
+screenshots: install
+	scripts/screenshots.sh
 
 # One-off: the SDK ships the system image but no device.
 avd:

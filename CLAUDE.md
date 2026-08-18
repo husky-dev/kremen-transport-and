@@ -219,9 +219,46 @@ and programs → App content → Data safety). Any push — text, images or bina
 ```sh
 make metadata        # download the live listing
 make metadata-push   # upload text and changelogs (no binary, no images)
+make images-push     # upload the icon and screenshots
 make internal        # build the AAB and upload to the internal track
 make production      # promote internal to production at 20% rollout
 ```
+
+## Store screenshots
+
+`make screenshots` regenerates all twelve — three screens × `en-US`/`uk` × phone and 10" tablet —
+into `fastlane/metadata/android/<locale>/images/{phone,tenInch}Screenshots/`, where `images_push`
+picks them up. It needs a running emulator and takes about fifteen minutes.
+
+They are generated, not hand-captured, because the live API makes hand-captures unrepeatable:
+vehicles move every 5 s and predictions expire, so re-shooting for the next release would change
+the whole listing for no reason. `scripts/screenshots.sh` drives
+`com.krementransport.screenshot.ScreenshotActivity` — debug-source-set only, not the launcher, and
+absent from release. It serves the API from the captured fixtures via an OkHttp interceptor and
+takes its camera, language and open sheet from intent extras, so **no step taps a coordinate** and
+nothing breaks when a control moves. The three `main` seams it needs are all defaulted parameters:
+`AppContainer(context, api)` and `MapScreen`'s `initialCamera` / `initialPickerOpen`.
+
+Five things about this that are not visible from the scripts:
+
+- **Play rejects a screenshot whose long side exceeds twice its short side.** The Pixel 8 AVD is
+  1080×2400 — 20:9 — so a raw `screencap` is not a legal upload. Phone shots are cropped to
+  1080×2160, which fixes the ratio and drops the status bar together.
+- **The Maps SDK labels tiles from the *device* locale, not the per-app one.** Setting only the
+  app language gives a Ukrainian listing Ukrainian buttons over Latin street names. The script
+  sets `persist.sys.locale` and restarts the framework, which is why locale is the outer loop.
+- **`MapGeometry.DefaultZoom` (14f) is below the 15f `MapDetail` needs to draw stops**, so the
+  app's own default camera produces bare polylines. The shots pass an explicit camera, and the
+  tablet needs its own value — 1706 dp of width covers four times the ground 411 dp does.
+- **The emulator's Maps renderer degrades over a session** and starts returning a flat beige
+  rectangle for every capture, which relaunching the app does not clear. Hence a framework restart
+  before each form factor. A blank map is caught by compressed size — colour statistics do not
+  separate it, because a drawn map is itself mostly flat background with thin lines over it.
+- **Past `ExpandedWidthDp` the route picker is already a permanent pane**, so `initialPickerOpen`
+  changes nothing on tablet and the map and routes shots come out identical. The tablet's routes
+  shot pulls the camera back instead.
+
+`scripts/verify_screenshots.sh` re-checks every rule above and runs at the end of each capture.
 
 ## Tests
 

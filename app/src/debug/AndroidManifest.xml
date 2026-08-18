@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Debug-only additions. `MainActivity` stays the launcher: the ordinary debug app is unchanged and
+  still talks to the live API. `ScreenshotActivity` is reached only by explicit component from
+  scripts/screenshots.sh, so it can never be the thing that opens when someone taps the icon.
+-->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+
+        <!--
+          Plain AppCompat rather than the .Starting splash theme: this activity does not call
+          installSplashScreen(), and AppCompat throws outright if the theme is not a descendant.
+          A splash would only be one more thing for the driver to wait out anyway.
+        -->
+        <activity
+            android:name="com.krementransport.screenshot.ScreenshotActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:resizeableActivity="true"
+            android:theme="@style/Theme.KremenTransport"
+            android:windowSoftInputMode="adjustResize" />
+    </application>
+</manifest>

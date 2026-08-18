@@ -72,6 +72,11 @@ fun MapScreen(
     isDarkTheme: Boolean,
     widthDp: Int,
     modifier: Modifier = Modifier,
+    // Entry state, defaulted to what the app has always done. Only the debug screenshot harness
+    // passes anything else: a map screenshot needs a camera it chose, not wherever zoom 14 lands.
+    initialCamera: CameraPosition =
+        CameraPosition.fromLatLngZoom(MapGeometry.CityCenter, MapGeometry.DefaultZoom),
+    initialPickerOpen: Boolean = false,
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -84,15 +89,13 @@ fun MapScreen(
 
     val isExpanded = widthDp >= ExpandedWidthDp
 
-    var isPickerOpen by remember { mutableStateOf(false) }
+    var isPickerOpen by remember { mutableStateOf(initialPickerOpen) }
     var isSettingsOpen by remember { mutableStateOf(false) }
     var isLocationDeniedShown by remember { mutableStateOf(false) }
     var isLocating by remember { mutableStateOf(false) }
     var hasLocationPermission by remember { mutableStateOf(locationProvider.hasPermission) }
 
-    val cameraPositionState = rememberCameraPositionState {
-        position = CameraPosition.fromLatLngZoom(MapGeometry.CityCenter, MapGeometry.DefaultZoom)
-    }
+    val cameraPositionState = rememberCameraPositionState { position = initialCamera }
 
     // Polling lives and dies with the resumed lifecycle: backgrounding the app cancels the scope,
     // which is the entire shutdown mechanism.

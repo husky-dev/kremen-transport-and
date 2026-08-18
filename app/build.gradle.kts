@@ -120,3 +120,44 @@ dependencies {
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
 }
+
+/**
+ * The screenshot harness serves the API from the very captures the unit tests decode, so the two
+ * cannot drift apart — `DecodingTest` asserting 38 routes and 319 vehicles is what keeps the store
+ * screenshots honest. `prediction.json` is deliberately not copied: `app/src/debug/assets` ships a
+ * curated one, because the capture holds four arrivals in a single direction and renders a
+ * lopsided sheet.
+ */
+abstract class ScreenshotFixtures : DefaultTask() {
+
+    @get:InputDirectory
+    abstract val source: DirectoryProperty
+
+    @get:OutputDirectory
+    abstract val outputDir: DirectoryProperty
+
+    @TaskAction
+    fun copyFixtures() {
+        val from = source.get().asFile
+        val into = outputDir.get().asFile
+        into.mkdirs()
+        for (name in listOf("routes.json", "buses.json", "locations.json")) {
+            from.resolve(name).copyTo(into.resolve(name), overwrite = true)
+        }
+    }
+}
+
+val screenshotFixtures = tasks.register<ScreenshotFixtures>("screenshotFixtures") {
+    source.set(layout.projectDirectory.dir("src/test/resources"))
+}
+
+// AGP 9 will not take a task Provider through the SourceSet API — generated directories have to
+// go through the variant API, which is also what carries the task dependency.
+androidComponents {
+    onVariants(selector().withBuildType("debug")) { variant ->
+        variant.sources.assets?.addGeneratedSourceDirectory(
+            screenshotFixtures,
+            ScreenshotFixtures::outputDir,
+        )
+    }
+}
