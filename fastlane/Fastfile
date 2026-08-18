@@ -29,14 +29,25 @@ platform :android do
     # supply only exposes downloading through `init` on its CLI, not through an action.
     # Overwriting is safe — this is git, so the result reads as a diff.
     Dir.chdir("..") do
-      sh("fastlane", "supply", "init", "--json_key", play_key_path!)
+      sh("fastlane", "supply", "init", "--json_key", play_key_path!, "--track", "internal")
     end
   end
 
   desc "Upload fastlane/metadata/android back to Play (no binary, no images)"
-  lane :metadata_push do
+  # A changelog belongs to a *release*, not to the listing: supply can only attach
+  # metadata/android/<locale>/changelogs/<code>.txt to a version code Play already has. With no
+  # binary in the edit it has no code to aim at and dies with
+  # "Could not find release for version code '' to update changelog". So listing text goes up on
+  # its own here, and the changelog rides along with the AAB in the `internal` lane. Pass
+  # `version_code:` (and the track holding it) to push a changelog to an already-uploaded build:
+  #   fastlane metadata_push version_code:1005000 track:internal
+  lane :metadata_push do |options|
+    version_code = options[:version_code]&.to_i
     supply(
       json_key: play_key_path!,
+      track: options[:track] || "internal",
+      version_code: version_code,
+      skip_upload_changelogs: version_code.nil?,
       skip_upload_apk: true,
       skip_upload_aab: true,
       skip_upload_images: true,

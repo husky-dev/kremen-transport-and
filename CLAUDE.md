@@ -164,6 +164,8 @@ itself. There is no `autoStoreLocales` service — DataStore is the single sourc
   `kremen-transport-mob/scripts/version_sync.py`; 1.4.2 shipped as 1004002. **Confirm the highest
   live versionCode in the Play Console before the first upload** — the RN build had an ABI-split
   path that multiplied codes by 1000, and if any such APK shipped, 1005000 would be too low.
+  Checked on 2026-08-18 via `fastlane run google_play_track_version_codes`: internal 1004002,
+  alpha/beta 1000012, production empty. No inflated codes ever shipped, so 1005000 is safe.
 - Signing reads `keystore.properties` (git-ignored, see `keystore.properties.example`). Absent, the
   release build falls back to the debug key so a clean checkout still builds — and Play rejects it,
   which is the intended failure.
@@ -197,6 +199,22 @@ in dark, matching the iOS launch screen and the bus-stop sign it is named after.
 
 See `fastlane/README.md`. Store text lives in the repo next to the app's own localizations, one
 string per file, so a listing change reads as a diff. Changelogs are named by versionCode.
+
+Three things about `supply` that are not visible from the lane definitions:
+
+- **Play's Ukrainian listing locale is `uk`, not `uk-UA`.** A `uk-UA` directory uploads its
+  strings and then fails the commit with a bare `Invalid request`. The live locales are `en-US`,
+  `uk` and a stale `ru-RU` inherited from the RN app (the app itself no longer ships `ru`).
+- **A changelog belongs to a release, not to the listing.** `metadata_push` therefore skips
+  changelogs unless given a `version_code:` that Play already has; the 1005000 text goes up
+  attached to the AAB in the `internal` lane. Without that, supply dies with
+  `Could not find release for version code '' to update changelog`.
+- **`supply init` defaults to the production track**, which is empty here, so `metadata_pull`
+  passes `--track internal`.
+
+**The Data safety declaration blocks every commit until it is filled in** (Play Console → Policy
+and programs → App content → Data safety). Any push — text, images or binary — ends in
+`Invalid request - This app has no data safety declaration`. It cannot be set through the API.
 
 ```sh
 make metadata        # download the live listing
